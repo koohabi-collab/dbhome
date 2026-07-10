@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<!--BUILD_ID=e5ce9d6725a9-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>대시보드 홈 — 접근 제한</title>
+<style>
+body { font-family:'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',sans-serif;
+  background:#0f0e17; color:#fff; height:100vh; margin:0;
+  display:flex; align-items:center; justify-content:center; }
+.box { background:#1a1929; padding:40px 48px; border-radius:14px; text-align:center;
+  box-shadow:0 8px 40px rgba(0,0,0,.5); }
+h1 { font-size:20px; margin:0 0 6px; } h1 span { color:#e8c547; }
+p { color:#888; font-size:13px; margin:0 0 24px; }
+input { background:#0f0e17; border:1px solid #333; color:#fff; padding:12px 16px;
+  border-radius:8px; font-size:16px; text-align:center; letter-spacing:4px; width:180px; }
+input:focus { outline:none; border-color:#e8c547; }
+button { display:block; margin:16px auto 0; background:#e8c547; color:#0f0e17; border:none;
+  padding:11px 36px; border-radius:8px; font-size:14px; font-weight:700; cursor:pointer; }
+#err { color:#ff6b6b; font-size:12px; height:16px; margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>대시보드 <span>홈</span></h1>
+  <p>비밀번호를 입력하세요</p>
+  <form id="f">
+    <input type="password" id="pw" autocomplete="off">
+    <button type="submit">열기</button>
+  </form>
+  <div id="err"></div>
+</div>
+<script>
+const SALT='sSbqkbAzC4Op1bkRIBKfvA==', IV='5CxJDjF+f3/QLHPq', CT='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', ITER=600000;
+const un = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+document.getElementById('f').addEventListener('submit', async e => {
+  e.preventDefault();
+  const err = document.getElementById('err');
+  err.textContent = '확인 중…';
+  try {
+    const pw = document.getElementById('pw').value;
+    const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey(
+      {name:'PBKDF2', salt:un(SALT), iterations:ITER, hash:'SHA-256'},
+      km, {name:'AES-GCM', length:256}, false, ['decrypt']);
+    const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:un(IV)}, key, un(CT));
+    const html = new TextDecoder().decode(pt);
+    try{sessionStorage.setItem('dash_pw', pw);}catch(_){}
+    document.open(); document.write(html); document.close();
+  } catch (ex) {
+    err.textContent = '비밀번호가 올바르지 않습니다';
+  }
+});
+
+
+/* 세션 자동잠금해제 — 같은 탭 안에서는 비밀번호 재입력 불필요 */
+(async () => { try {
+  const sp = sessionStorage.getItem('dash_pw'); if (!sp) return;
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(sp), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey({name:'PBKDF2', salt:un(SALT), iterations:ITER, hash:'SHA-256'},
+    km, {name:'AES-GCM', length:256}, false, ['decrypt']);
+  const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:un(IV)}, key, un(CT));
+  document.open(); document.write(new TextDecoder().decode(pt)); document.close();
+} catch (e) { try{sessionStorage.removeItem('dash_pw');}catch(_){} } })();
+
+/* 새 버전 자동 감지 — 캐시된 옛 페이지가 열리면 서버의 BUILD_ID와 비교해 스스로 새로고침.
+   덕분에 사용자는 항상 같은 주소만 쓰면 된다 (?v= 캐시 우회 불필요). */
+const BUILD_ID = 'e5ce9d6725a9';
+(async () => {
+  try {
+    const r = await fetch(location.pathname, {cache: 'no-store', headers: {'Range': 'bytes=0-2047'}});
+    const head = (await r.text()).slice(0, 4000);
+    const m = head.match(/BUILD_ID=([0-9a-f]+)/);
+    if (m && m[1] !== BUILD_ID) {
+      if (!document.getElementById('pw').value) {
+        location.replace(location.pathname + '?u=' + Date.now());
+      } else {
+        document.getElementById('err').textContent = '새 버전이 있습니다 — 새로고침 해주세요';
+      }
+    }
+  } catch (e) {}
+})();
+</script>
+</body>
+</html>
