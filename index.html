@@ -77,7 +77,7 @@ document.getElementById('f').addEventListener('submit', async e => {
 
 /* 새 버전 자동 감지 — 캐시된 옛 페이지가 열리면 서버의 BUILD_ID와 비교해 스스로 새로고침.
    덕분에 사용자는 항상 같은 주소만 쓰면 된다 (?v= 캐시 우회 불필요). */
-const BUILD_ID = '95a44a73a1ab';
+const BUILD_ID = '2eb5723c3b85';
 (async () => {
   try {
     const r = await fetch(location.pathname, {cache: 'no-store', headers: {'Range': 'bytes=0-2047'}});
